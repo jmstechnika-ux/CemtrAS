@@ -312,7 +312,7 @@ function App() {
             <ChatInput 
               onSend={handleSendMessage}
               isLoading={chatState.isLoading || !!error}
-              placeholder={`Ask about cement plant operations (${chatState.selectedRole} expertise)...`}
+              placeholder={`Ask about cement or power plant operations (${chatState.selectedRole} expertise)...`}
             />
           </div>
         </div>
