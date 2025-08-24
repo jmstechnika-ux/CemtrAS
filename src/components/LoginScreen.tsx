@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Factory,
   LogIn,
   Zap,
   ArrowRight,
@@ -22,25 +21,22 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 flex flex-col items-center p-8 space-y-16">
       {/* ========== 1. Welcome Section ========== */}
       <div className="max-w-3xl text-center space-y-6">
-        {/* Logo & Brand */}
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="p-3 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-lg">
-            <Factory className="text-white" size={36} />
-          </div>
-          <div>
-            <h1 className="text-slate-900 font-bold text-3xl">CemtrAS AI</h1>
-            <p className="text-yellow-600 text-lg font-semibold">
-              AI-Driven Engineering for Cement Excellence
-            </p>
-          </div>
+        {/* Brand Name & Tagline */}
+        <div className="mb-6">
+          <h1 className="text-slate-900 font-extrabold text-5xl md:text-6xl tracking-tight animate-fade-in-up">
+            CemtrAS <span className="text-blue-700">AI</span>
+          </h1>
+          <p className="text-yellow-600 text-xl md:text-2xl font-semibold mt-3 animate-fade-in">
+            AI-Driven Engineering for Cement Excellence
+          </p>
         </div>
 
         {/* Welcome Message */}
-        <h2 className="text-4xl font-bold text-slate-800 leading-tight">
-          👷 Welcome to CemtrAS AI
+        <h2 className="text-4xl font-bold text-slate-800 leading-tight animate-fade-in-up delay-200">
+          Welcome to CemtrAS AI
         </h2>
-        <p className="text-slate-600 text-lg">
-          <span className="text-yellow-600 font-bold">CemtrAS AI</span>, your AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.
+        <p className="text-slate-600 text-lg animate-fade-in delay-300">
+          <span className="text-yellow-600 font-bold">CemtrAS AI</span>, AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants
         </p>
       </div>
 
