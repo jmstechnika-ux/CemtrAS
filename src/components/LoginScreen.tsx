@@ -41,8 +41,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
             />
           </div>
           <div className="text-center">
-            <h2 className="text-white font-bold text-2xl mb-2">CemtrAS AI</h2>
-            <p className="text-yellow-400 font-semibold text-lg mb-1"> Made by Vipul Sharma</p>
+            <h2 className="text-white font-bold text-2xl mb-2">Vipul Sharma</h2>
+            <p className="text-yellow-400 font-semibold text-lg mb-1"> Founder </p>
             <p className="text-slate-300 text-sm">We are an AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants</p>
           </div>
         </div>
