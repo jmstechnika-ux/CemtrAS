@@ -257,7 +257,7 @@ function App() {
                 <div className="p-8 bg-gradient-to-br from-blue-600/10 to-blue-800/10 rounded-3xl w-32 h-32 mx-auto mb-8 flex items-center justify-center border-4 border-blue-200 shadow-xl">
                   <Factory className="text-blue-600 w-16 h-16" />
                 </div>
-                <h3 className="text-3xl font-bold text-slate-800 mb-4">  Welcome to CemtrAS AI Crafted By Vipul –  </h3>
+                <h3 className="text-3xl font-bold text-slate-800 mb-4">  Welcome to CemtrAS AI  </h3>
                 <p className="text-slate-600 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
                   AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants..<br/>
                   Choose your area of expertise to get tailored guidance for cement plant operations, maintenance, and performance improvement.
