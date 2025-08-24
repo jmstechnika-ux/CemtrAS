@@ -25,8 +25,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
               <Factory className="text-white" size={32} />
             </div>
             <div>
-              <h1 className="text-white font-bold text-lg">CEMENT  AND POWER PLANT</h1>
-              <p className="text-yellow-400 text-sm font-semibold">EXPERT AI</p>
+              <h1 className="text-white font-bold text-lg">CEMENT PLANT</h1>
+              <p className="text-yellow-400 text-sm font-semibold">We are an AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.</p>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
           <div className="text-center">
             <h2 className="text-white font-bold text-2xl mb-2">CemtrAS AI</h2>
             <p className="text-yellow-400 font-semibold text-lg mb-1"> Made by Vipul Sharma</p>
-            <p className="text-slate-300 text-sm">AI-Driven Engineering for Cement and power Excellence</p>
+            <p className="text-slate-300 text-sm">AI-Driven Engineering for Cement Excellence</p>
           </div>
         </div>
 
