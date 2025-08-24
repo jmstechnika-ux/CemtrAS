@@ -40,9 +40,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           👷 Welcome to CemtrAS AI
         </h2>
         <p className="text-slate-600 text-lg">
-          <span className="text-yellow-600 font-bold">CemtrAS AI</span>, your
-          technical assistant, here to provide expert guidance for cement plant
-          operations, maintenance, and performance improvement.
+          <span className="text-yellow-600 font-bold">CemtrAS AI</span>, yourAI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.
         </p>
       </div>
 
