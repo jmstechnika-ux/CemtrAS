@@ -24,7 +24,7 @@ const roles: { value: UserRole; label: string; icon: React.ReactNode; color: str
   },
   { 
     value: 'Sales & Marketing', 
-    label: 'ales & Marketing', 
+    label: 'Sales & Marketing', 
     icon: <TrendingUp size={18} />, 
     color: 'border-green-500 bg-green-50 text-green-700',
     description: 'Market analysis & customer strategies'
