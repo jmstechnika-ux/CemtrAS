@@ -42,7 +42,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
           </div>
           <div className="text-center">
             <h2 className="text-white font-bold text-2xl mb-2">CemtrAS AI</h2>
-            <p className="text-yellow-400 font-semibold text-lg mb-1">Technical Assistant</p>
+            <p className="text-yellow-400 font-semibold text-lg mb-1"> Made by Vipul Sharma</p>
             <p className="text-slate-300 text-sm">AI-Driven Engineering for Cement Excellence</p>
           </div>
         </div>
