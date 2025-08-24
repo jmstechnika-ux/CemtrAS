@@ -140,13 +140,13 @@ function App() {
               <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
                 <img 
                   src="/untitled (10).jpeg" 
-                  alt="Vipul Sharma"
+                  alt="CemtrAS AI"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <h3 className="text-white font-bold text-lg">Vipul Sharma</h3>
-                <p className="text-yellow-400 text-sm font-semibold">Technical Assistant</p>
+                <h3 className="text-white font-bold text-lg">CemtrAS AI</h3>
+                <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for Cement Excellence</p>
                 <p className="text-slate-400 text-xs">Plant Operations Expert</p>
               </div>
             </div>
