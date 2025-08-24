@@ -36,7 +36,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
           <div className="w-48 h-48 rounded-full overflow-hidden border-6 border-yellow-500 shadow-2xl mx-auto mb-6">
             <img 
               src="/untitled (10).jpeg" 
-              alt="CemtrAS AI | AI-Driven Engineering for Cement Excellence by Vipul Sharma"
+              alt="CemtrAS AI | AI-Driven Engineering for Cement and Power Excellence by Vipul Sharma"
               className="w-full h-full object-cover"
             />
           </div>
