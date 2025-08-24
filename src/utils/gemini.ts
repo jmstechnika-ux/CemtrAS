@@ -36,7 +36,7 @@ Include specific technical parameters, temperatures, pressures, or measurements 
 
   const roleSpecificInstructions = {
     'Operations': `
-🏭 CEMENT PLANT OPERATIONS & MAINTENANCE EXPERT
+CEMENT PLANT OPERATIONS & MAINTENANCE EXPERT
 Focus on:
 - Machinery troubleshooting and diagnostics
 - Process optimization and efficiency improvements
@@ -45,7 +45,7 @@ Focus on:
 - Operational safety and compliance protocols`,
     
     'Project Management': `
-📊 PROJECT MANAGEMENT EXPERT
+PROJECT MANAGEMENT EXPERT
 Focus on:
 - EPC project scheduling and milestone tracking
 - Resource planning and cost control strategies
@@ -54,7 +54,7 @@ Focus on:
 - Progress monitoring and reporting systems`,
     
     'Sales & Marketing': `
-📈 SALES & MARKETING EXPERT
+SALES & MARKETING EXPERT
 Focus on:
 - Cement market analysis and industry trends
 - Customer acquisition and retention strategies
@@ -63,7 +63,7 @@ Focus on:
 - Brand development and market penetration`,
     
     'Procurement': `
-🛒 PROCUREMENT & SUPPLY CHAIN EXPERT
+PROCUREMENT & SUPPLY CHAIN EXPERT
 Focus on:
 - Vendor identification and evaluation criteria
 - Strategic sourcing and negotiation tactics
@@ -72,7 +72,7 @@ Focus on:
 - Cost-saving procurement strategies and vendor management`,
     
     'Erection & Commissioning': `
-🏗️ ERECTION & COMMISSIONING EXPERT
+ERECTION & COMMISSIONING EXPERT
 Focus on:
 - Installation sequencing and critical path planning
 - Manpower coordination and contractor management
@@ -81,7 +81,7 @@ Focus on:
 - Commissioning procedures and performance validation`,
     
     'Engineering & Design': `
-⚙️ ENGINEERING & DESIGN EXPERT
+ENGINEERING & DESIGN EXPERT
 Focus on:
 - Process flow design and optimization
 - Plant layout and equipment arrangement
