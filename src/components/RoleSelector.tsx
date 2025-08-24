@@ -10,7 +10,7 @@ interface RoleSelectorProps {
 const roles: { value: UserRole; label: string; icon: React.ReactNode; color: string; description: string }[] = [
   { 
     value: 'Operations', 
-    label: '🏭 Operations & Maintenance', 
+    label: 'Operations & Maintenance', 
     icon: <Factory size={18} />, 
     color: 'border-yellow-500 bg-yellow-50 text-yellow-700',
     description: 'Machinery troubleshooting & process optimization'
