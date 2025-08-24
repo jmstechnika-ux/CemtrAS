@@ -223,7 +223,7 @@ function App() {
                 <Factory className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-slate-800 font-bold text-xl">👷 Cement and Power Plant Expert AI</h2>
+                <h2 className="text-slate-800 font-bold text-xl">👷 Cement Plant Expert AI</h2>
                 <p className="text-slate-600 text-sm font-semibold">
                   Expertise: <span className="text-blue-600 font-bold">{chatState.selectedRole}</span>
                   {isGuest && <span className="ml-2 text-yellow-600">(Guest Mode)</span>}
