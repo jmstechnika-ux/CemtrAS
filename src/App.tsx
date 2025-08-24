@@ -125,7 +125,7 @@ function App() {
                   <Factory className="text-white" size={28} />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white tracking-wide">CEMENT PLANT</h1>
+                  <h1 className="text-xl font-bold text-white tracking-wide">CEMENT AND POWER PLANT</h1>
                   <p className="text-yellow-400 text-sm font-semibold">EXPERT AI</p>
                 </div>
               </div>
