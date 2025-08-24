@@ -125,8 +125,8 @@ function App() {
                   <Factory className="text-white" size={28} />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white tracking-wide">CEMENT AND POWER PLANT</h1>
-                  <p className="text-yellow-400 text-sm font-semibold">EXPERT AI</p>
+                  <h1 className="text-xl font-bold text-white tracking-wide">CEMENT PLANT</h1>
+                  <p className="text-yellow-400 text-sm font-semibold">We are an AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.</p>
                 </div>
               </div>
             )}
@@ -146,7 +146,7 @@ function App() {
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">CemtrAS AI</h3>
-                <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for Cement and Power Excellence</p>
+                <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for CementExcellence</p>
                 <p className="text-slate-400 text-xs">Plant Operations Expert</p>
               </div>
             </div>
@@ -201,7 +201,7 @@ function App() {
               <p className="text-slate-400 text-xs">
                 Powered by <span className="text-yellow-400 font-bold">AI Technology</span>
               </p>
-              <p className="text-slate-500 text-xs mt-1">© 2024 Cement and Power Plant Expert</p>
+              <p className="text-slate-500 text-xs mt-1">© 2024 Cement Plant Expert</p>
             </div>
           ) : (
             <div className="flex justify-center">
