@@ -145,7 +145,7 @@ function App() {
                 />
               </div>
               <div>
-                <h3 className="text-white font-bold text-lg">Founder -Vipul Sharma</h3>
+                <h3 className="text-white font-bold text-lg">Founder - Vipul Sharma</h3>
                 <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for Cement Excellence</p>
                 <p className="text-slate-400 text-xs">Intelligence, automation, future-ready solutions </p>
               </div>
