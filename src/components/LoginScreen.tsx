@@ -36,7 +36,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           Welcome to CemtrAS AI
         </h2>
         <p className="text-slate-600 text-lg animate-fade-in delay-300">
-          <span className="text-4xl font-bold text-slate-800 leading-tight animate-fade-in-up delay-200"> AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants</span>
+          <span className="text-blue-700"> AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants</span>
         </p>
       </div>
 
