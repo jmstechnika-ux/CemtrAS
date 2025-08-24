@@ -50,7 +50,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
         {/* Welcome Message */}
         <div className="text-center max-w-lg">
           <h3 className="text-white font-bold text-3xl mb-4 leading-tight">
-            👷 Welcome to Cement Plant Expert AI
+            👷 Welcome to CemtrSAS AI
           </h3>
           <p className="text-slate-300 text-lg mb-2 font-semibold">
             Your Partner in Optimizing Operations, Safety & Efficiency
