@@ -5,7 +5,7 @@ export interface Message {
   timestamp: Date;
 }
 
-export type UserRole = 'Marketing' | 'Sales' | 'Procurement' | 'Engineering' | 'Site Team';
+export type UserRole = 'Operations' | 'Project Management' | 'Sales & Marketing' | 'Procurement' | 'Erection & Commissioning' | 'Engineering & Design';
 
 export interface ChatState {
   messages: Message[];

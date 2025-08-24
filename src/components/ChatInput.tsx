@@ -27,15 +27,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSend, isLoading, placeho
           onChange={(e) => setInput(e.target.value)}
           placeholder={placeholder || "Describe your cement plant challenge or question..."}
           disabled={isLoading}
-          className="w-full px-6 py-4 bg-gray-50 border-4 border-gray-300 rounded-2xl
+          className="w-full px-6 py-4 bg-slate-50 border-4 border-slate-300 rounded-2xl
                    focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-500
                    disabled:opacity-50 disabled:cursor-not-allowed
-                   text-gray-800 placeholder-gray-500 text-sm font-semibold
+                   text-slate-800 placeholder-slate-500 text-sm font-semibold
                    shadow-lg transition-all duration-300"
         />
         <button
           type="button"
-          className="absolute right-16 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute right-16 top-1/2 transform -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 transition-colors"
         >
           <Mic size={18} />
         </button>
