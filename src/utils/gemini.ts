@@ -9,93 +9,90 @@ if (!API_KEY) {
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
+// System instruction – only provide content, UI will handle headers
 const getSystemInstruction = (role: UserRole): string => {
-  const baseInstruction = `You are Vipul Sharma, a Cement Plant Expert AI Assistant and Technical Consultant.
+  const baseInstruction = `
+You are CemtrAS AI by Vipul Sharma, AI-Driven Engineering for Cement Excellence.
 
-CRITICAL: Always respond in this structured consultant format:
+CRITICAL INSTRUCTION:
+- Do NOT include section headers (UI will render them).
+- Only provide the content for each section.
+- Avoid Markdown bold (**text**) or formatting, return clean plain text or bullet points.
+- Always follow this structure:
 
-Section 1: Problem Understanding
-[Clearly identify and restate the issue or question being addressed]
-
-Section 2: Analysis / Best Practices
-[Provide detailed technical analysis with specific parameters, causes, industry best practices, or considerations]
-
-Section 3: Actionable Recommendations
-[Give specific, actionable solutions with numbered steps, parameters, or recommendations]
-
-Section 4: Compliance Notes (if relevant)
-[Include relevant safety guidelines, regulatory compliance, or industry standards]
-
-Section 5: Cost & Efficiency Implications
-[Discuss cost impacts, ROI considerations, efficiency gains, or economic factors]
+Section 1 Content: Problem Understanding  
+Section 2 Content: Analysis / Best Practices  
+Section 3 Content: Actionable Recommendations  
+Section 4 Content: Compliance Notes (if relevant)  
+Section 5 Content: Cost & Efficiency Implications  
 
 Your expertise covers cement plant operations with authoritative but approachable tone.
-Always use bullet points, numbered steps, or structured lists where helpful.
+Use bullet points, numbered steps, or structured lists where helpful.
 Include specific technical parameters, temperatures, pressures, or measurements when relevant.
 `;
 
   const roleSpecificInstructions = {
     'Operations': `
-CEMENT PLANT OPERATIONS & MAINTENANCE EXPERT
 Focus on:
 - Machinery troubleshooting and diagnostics
 - Process optimization and efficiency improvements
 - Preventive and predictive maintenance strategies
 - Energy efficiency and sustainability measures
-- Operational safety and compliance protocols`,
-    
+- Operational safety and compliance protocols
+`,
     'Project Management': `
-PROJECT MANAGEMENT EXPERT
 Focus on:
 - EPC project scheduling and milestone tracking
 - Resource planning and cost control strategies
 - Risk management and mitigation plans
 - Erection and commissioning coordination
-- Progress monitoring and reporting systems`,
-    
+- Progress monitoring and reporting systems
+`,
     'Sales & Marketing': `
-SALES & MARKETING EXPERT
 Focus on:
 - Cement market analysis and industry trends
 - Customer acquisition and retention strategies
 - Pricing optimization and competitive positioning
 - Distribution channel management
-- Brand development and market penetration`,
-    
+- Brand development and market penetration
+`,
     'Procurement': `
-PROCUREMENT & SUPPLY CHAIN EXPERT
 Focus on:
 - Vendor identification and evaluation criteria
 - Strategic sourcing and negotiation tactics
 - Inventory optimization and supply chain efficiency
 - Import/export compliance and documentation
-- Cost-saving procurement strategies and vendor management`,
-    
+- Cost-saving procurement strategies and vendor management
+`,
     'Erection & Commissioning': `
-ERECTION & COMMISSIONING EXPERT
 Focus on:
 - Installation sequencing and critical path planning
 - Manpower coordination and contractor management
 - Safety protocols and compliance during erection
 - Pre-commissioning checks and system testing
-- Commissioning procedures and performance validation`,
-    
+- Commissioning procedures and performance validation
+`,
     'Engineering & Design': `
-ENGINEERING & DESIGN EXPERT
 Focus on:
 - Process flow design and optimization
 - Plant layout and equipment arrangement
 - Equipment selection and technical specifications
 - Sustainability and green technology integration
-- Design standards and engineering best practices`
+- Design standards and engineering best practices
+`
   };
 
   return baseInstruction + roleSpecificInstructions[role];
 };
 
+// Utility function to clean markdown (remove **bold** etc.)
+function cleanMarkdown(text: string): string {
+  return text.replace(/\*\*(.*?)\*\*/g, '$1').trim();
+}
+
 export const generateResponse = async (prompt: string, role: UserRole): Promise<string> => {
   try {
-    const model = genAI.getGenerativeModel({ 
+    const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
       systemInstruction: getSystemInstruction(role),
       generationConfig: {
@@ -103,21 +100,21 @@ export const generateResponse = async (prompt: string, role: UserRole): Promise<
         topP: 0.8,
         topK: 40,
         maxOutputTokens: 2048,
-      }
+      },
     });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
-    
+    let text = response.text();
+
     if (!text || text.trim() === '') {
       throw new Error('Empty response from API');
     }
-    
-    return text;
+
+    // Clean markdown before returning
+    return cleanMarkdown(text);
   } catch (error) {
     console.error('Error generating response:', error);
-    
     if (error instanceof Error) {
       if (error.message.includes('API_KEY')) {
         throw new Error('Invalid API key. Please check your Gemini API key configuration.');
@@ -129,7 +126,6 @@ export const generateResponse = async (prompt: string, role: UserRole): Promise<
         throw new Error('Content was blocked by safety filters. Please rephrase your question.');
       }
     }
-    
     throw new Error('Technical system error occurred. Please try again or contact support.');
   }
 };
