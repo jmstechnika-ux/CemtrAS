@@ -146,7 +146,7 @@ function App() {
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">CemtrAS AI</h3>
-                <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for Cement Excellence</p>
+                <p className="text-yellow-400 text-sm font-semibold">AI-Driven Engineering for Cement and Power Excellence</p>
                 <p className="text-slate-400 text-xs">Plant Operations Expert</p>
               </div>
             </div>
