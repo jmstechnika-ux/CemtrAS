@@ -201,7 +201,7 @@ function App() {
               <p className="text-slate-400 text-xs">
                 Powered by <span className="text-yellow-400 font-bold">AI Technology</span>
               </p>
-              <p className="text-slate-500 text-xs mt-1">© 2024 Cement Plant Expert</p>
+              <p className="text-slate-500 text-xs mt-1">© 2024 Cement and Power Plant Expert</p>
             </div>
           ) : (
             <div className="flex justify-center">
