@@ -9,7 +9,7 @@ interface LoginScreenProps {
 export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 flex">
-      {/* UP Side  */}
+      {/* Left Side -50%  */}
       <div className="w-1/2 flex flex-col justify-center items-center p-12 bg-gradient-to-br from-slate-800 to-slate-900 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -61,7 +61,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onGuestAccess
         </div>
       </div>
 
-      {/* Down Side */}
+      {/* Right Side 50% */}
       <div className="w-1/2 flex flex-col justify-center items-center p-12 bg-gradient-to-br from-gray-100 to-gray-200">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center mb-12">
