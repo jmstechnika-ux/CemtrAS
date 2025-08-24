@@ -268,29 +268,29 @@ function App() {
                     <div className="text-left space-y-3">
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">🏭 Plant Operations & Maintenance</p>
+                        <p className="text-slate-700 font-semibold"> Plant Operations & Maintenance</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">📊 Project Management</p>
+                        <p className="text-slate-700 font-semibold">Project Management</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">📈 Sales & Marketing</p>
+                        <p className="text-slate-700 font-semibold">Sales & Marketing</p>
                       </div>
                     </div>
                     <div className="text-left space-y-3">
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">🛒 Procurement & Supply Chain</p>
+                        <p className="text-slate-700 font-semibold">Procurement & Supply Chain</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">🏗️ Erection & Commissioning</p>
+                        <p className="text-slate-700 font-semibold">Erection & Commissioning</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                        <p className="text-slate-700 font-semibold">⚙️ Engineering & Design</p>
+                        <p className="text-slate-700 font-semibold">Engineering & Design</p>
                       </div>
                     </div>
                   </div>
