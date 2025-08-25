@@ -10,7 +10,11 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // System instruction – only provide content, UI will handle headers
-const getSystemInstruction = (role: UserRole): string => {
+const getSystemInstruction = (role: UserRole | 'General AI'): string => {
+  if (role === 'General AI') {
+    return `You are a helpful AI assistant. Provide accurate, helpful responses to any questions across all topics and domains. Be informative, clear, and engaging in your responses.`;
+  }
+
   const baseInstruction = `
 You are CemtrAS AI by Vipul Sharma, AI-Driven Engineering for Cement Excellence.
 
@@ -90,7 +94,7 @@ function cleanMarkdown(text: string): string {
   return text.replace(/\*\*(.*?)\*\*/g, '$1').trim();
 }
 
-export const generateResponse = async (prompt: string, role: UserRole): Promise<string> => {
+export const generateResponse = async (prompt: string, role: UserRole | 'General AI'): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',

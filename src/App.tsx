@@ -1,26 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Factory, Settings, User, MessageSquare, Zap, LogIn, UserPlus, ArrowRight } from 'lucide-react';
+import { Factory, Settings, User, MessageSquare, Zap, LogIn, UserPlus, ArrowRight, LogOut } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { RoleSelector } from './components/RoleSelector';
+import { ChatHistoryList } from './components/ChatHistoryList';
 import { LoadingMessage } from './components/LoadingMessage';
 import { ErrorMessage } from './components/ErrorMessage';
 import { LoginScreen } from './components/LoginScreen';
 import { AuthScreen } from './components/AuthScreen';
+import { useAuth } from './contexts/AuthContext';
+import { useChatHistory } from './contexts/ChatHistoryContext';
 import { generateResponse } from './utils/gemini';
-import type { Message, UserRole, ChatState } from './types';
+import type { Message, UserRole, ChatState, ChatHistory } from './types';
 
 function App() {
+  const { user, isAuthenticated, logout } = useAuth();
+  const { saveChatHistory, loadChatHistory, setCurrentChatId } = useChatHistory();
   const [showLogin, setShowLogin] = useState(true);
   const [showAuth, setShowAuth] = useState(false);
-  const [isGuest, setIsGuest] = useState(false);
   const [chatState, setChatState] = useState<ChatState>({
     messages: [],
     isLoading: false,
-    selectedRole: 'Operations'
+    selectedRole: 'Operations',
+    uploadedFiles: []
   });
   const [error, setError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -30,6 +36,14 @@ function App() {
   useEffect(() => {
     scrollToBottom();
   }, [chatState.messages, chatState.isLoading]);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    if (isAuthenticated) {
+      setShowLogin(false);
+      setShowAuth(false);
+    }
+  }, [isAuthenticated]);
 
   // Check if API key is available
   useEffect(() => {
@@ -41,18 +55,28 @@ function App() {
   const handleLogin = () => {
     setShowLogin(false);
     setShowAuth(true);
-    setIsGuest(false);
   };
 
   const handleGuestAccess = () => {
     setShowLogin(false);
     setShowAuth(false);
-    setIsGuest(true);
   };
 
   const handleAuthComplete = () => {
     setShowAuth(false);
-    setIsGuest(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setChatState({
+      messages: [],
+      isLoading: false,
+      selectedRole: 'Operations',
+      uploadedFiles: []
+    });
+    setCurrentChatId(null);
+    setShowLogoutConfirm(false);
+    setShowLogin(true);
   };
 
   const handleSendMessage = async (content: string) => {
@@ -92,13 +116,48 @@ function App() {
     }
   };
 
-  const handleRoleChange = (role: UserRole) => {
+  // Auto-save chat when messages change (for authenticated users)
+  useEffect(() => {
+    if (isAuthenticated && chatState.messages.length >= 2) {
+      // Only save if we have at least 1 user message and 1 AI response
+      const hasUserMessage = chatState.messages.some(m => m.role === 'user');
+      const hasAIResponse = chatState.messages.some(m => m.role === 'assistant');
+      
+      if (hasUserMessage && hasAIResponse) {
+        saveChatHistory({
+          messages: chatState.messages,
+          role: chatState.selectedRole
+        });
+      }
+    }
+  }, [chatState.messages, isAuthenticated, chatState.selectedRole, saveChatHistory]);
+
+  const handleRoleChange = (role: UserRole | 'General AI') => {
     setChatState(prev => ({ ...prev, selectedRole: role }));
+  };
+
+  const handleLoadChat = (history: ChatHistory) => {
+    setChatState(prev => ({
+      ...prev,
+      messages: history.messages,
+      selectedRole: history.role,
+      isLoading: false
+    }));
+    setCurrentChatId(history.id);
+  };
+
+  const handleNewChat = () => {
+    setChatState(prev => ({
+      ...prev,
+      messages: [],
+      isLoading: false
+    }));
+    setCurrentChatId(null);
   };
 
   const clearError = () => setError(null);
 
-  if (showLogin) {
+  if (showLogin && !isAuthenticated) {
     return <LoginScreen onLogin={handleLogin} onGuestAccess={handleGuestAccess} />;
   }
 
@@ -136,20 +195,40 @@ function App() {
         {/* Profile Section */}
         {sidebarOpen && (
           <div className="p-6 border-b-2 border-slate-700">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
-                <img 
-                  src="/untitled (10).jpeg" 
-                  alt="CemtrAS AI"
-                  className="w-full h-full object-cover"
-                />
+            {isAuthenticated && user ? (
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center border-4 border-yellow-500 shadow-lg">
+                  <User className="text-white" size={24} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-bold text-lg">{user.fullName}</h3>
+                  <p className="text-yellow-400 text-sm font-semibold">Authenticated User</p>
+                  <p className="text-slate-400 text-xs">{user.email}</p>
+                </div>
+                <button
+                  onClick={() => setShowLogoutConfirm(true)}
+                  className="p-2 hover:bg-slate-700 rounded-lg transition-colors text-slate-400 hover:text-red-400"
+                  title="Logout"
+                >
+                  <LogOut size={18} />
+                </button>
               </div>
-              <div>
-                <h3 className="text-white font-bold text-lg"> Vipul Sharma</h3>
-                <p className="text-yellow-400 text-sm font-semibold"> Founder of CemtrAS AI | AI-Driven Engineering for Cement Excellence</p>
-                <p className="text-slate-400 text-xs">Intelligence, automation, future-ready solutions </p>
+            ) : (
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
+                  <img 
+                    src="/untitled (10).jpeg" 
+                    alt="CemtrAS AI"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg">Vipul Sharma</h3>
+                  <p className="text-yellow-400 text-sm font-semibold">Founder of CemtrAS AI</p>
+                  <p className="text-slate-400 text-xs">Guest Mode Active</p>
+                </div>
               </div>
-            </div>
+            )}
             
             {/* Role Selector */}
             <div className="space-y-3">
@@ -165,7 +244,16 @@ function App() {
         {/* Stats */}
         {sidebarOpen && (
           <div className="p-6 flex-1">
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Chat History */}
+              {isAuthenticated && (
+                <ChatHistoryList 
+                  onLoadChat={handleLoadChat}
+                  onNewChat={handleNewChat}
+                />
+              )}
+
+              {/* Stats */}
               <div className="bg-slate-800/80 rounded-lg p-4 border-l-4 border-blue-500">
                 <div className="flex items-center gap-3 mb-2">
                   <MessageSquare className="text-blue-400" size={18} />
@@ -184,7 +272,7 @@ function App() {
                 </p>
               </div>
 
-              {isGuest && (
+              {!isAuthenticated && (
                 <div className="bg-yellow-500/20 rounded-lg p-4 border border-yellow-500">
                   <p className="text-yellow-300 text-xs font-semibold mb-2">GUEST MODE</p>
                   <p className="text-slate-300 text-xs">Login to save chats & access detailed reports</p>
@@ -226,7 +314,7 @@ function App() {
                 <h2 className="text-slate-800 font-bold text-xl">👷 Cement Plant Expert AI</h2>
                 <p className="text-slate-600 text-sm font-semibold">
                   Expertise: <span className="text-blue-600 font-bold">{chatState.selectedRole}</span>
-                  {isGuest && <span className="ml-2 text-yellow-600">(Guest Mode)</span>}
+                  {!isAuthenticated && <span className="ml-2 text-yellow-600">(Guest Mode)</span>}
                 </p>
               </div>
             </div>
@@ -261,6 +349,7 @@ function App() {
                 <p className="text-slate-600 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
                   AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants..<br/>
                   Choose your area of expertise to get tailored guidance for cement plant operations, maintenance, and performance improvement.
+                  {isAuthenticated && <span className="text-green-600 font-semibold"><br/>✅ You have access to General AI mode and chat history!</span>}
                 </p>
                 <div className="bg-white rounded-2xl p-8 max-w-4xl mx-auto border-4 border-slate-200 shadow-xl">
                   <h4 className="text-xl font-bold text-slate-800 mb-6">🔧 Available Expertise Areas:</h4>
@@ -293,7 +382,22 @@ function App() {
                         <p className="text-slate-700 font-semibold">Engineering & Design</p>
                       </div>
                     </div>
+                    {isAuthenticated && (
+                      <div className="text-left space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                          <p className="text-slate-700 font-semibold">🤖 General AI Assistant</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
+                  {!isAuthenticated && (
+                    <div className="mt-6 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-xl">
+                      <p className="text-yellow-800 font-semibold text-sm">
+                        🔓 Login to unlock General AI mode, file uploads, and chat history!
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
@@ -317,6 +421,30 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border-4 border-slate-200">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Confirm Logout</h3>
+            <p className="text-slate-600 mb-6">Are you sure you want to logout? Your chat history will be preserved.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 py-3 px-4 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 py-3 px-4 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

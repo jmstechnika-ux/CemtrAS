@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { Factory, LogIn, UserPlus, ArrowLeft, Eye, EyeOff, Mail, Phone, User, Lock } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { OTPVerification } from './OTPVerification';
+import type { RegisterData, LoginData } from '../types';
 
 interface AuthScreenProps {
   onComplete: () => void;
 }
 
 export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
+  const { register, login, sendOTP, verifyOTP, isLoading, error, clearError } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
+  const [showOTP, setShowOTP] = useState(false);
+  const [pendingMobile, setPendingMobile] = useState('');
+  const [pendingUserData, setPendingUserData] = useState<RegisterData | null>(null);
+  const [demoOTP, setDemoOTP] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,19 +28,107 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    clearError();
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate authentication
-    setTimeout(() => {
-      onComplete();
-    }, 1000);
+    
+    if (isLogin) {
+      // Login flow
+      const credentials: LoginData = {
+        emailOrMobile: formData.email || formData.mobile,
+        password: formData.password
+      };
+      
+      const success = await login(credentials);
+      if (success) {
+        // Send OTP for login verification
+        const user = JSON.parse(localStorage.getItem('cemtras_current_user') || '{}');
+        if (user.mobile) {
+          const otpResponse = await sendOTP(user.mobile);
+          if (otpResponse.success) {
+            setPendingMobile(user.mobile);
+            setDemoOTP(otpResponse.otp || '');
+            setShowOTP(true);
+          }
+        }
+      }
+    } else {
+      // Registration flow
+      if (formData.password !== formData.confirmPassword) {
+        return; // Error will be shown in UI
+      }
+      
+      const userData: RegisterData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        mobile: formData.mobile,
+        password: formData.password
+      };
+      
+      // Send OTP first
+      const otpResponse = await sendOTP(formData.mobile);
+      if (otpResponse.success) {
+        setPendingUserData(userData);
+        setPendingMobile(formData.mobile);
+        setDemoOTP(otpResponse.otp || '');
+        setShowOTP(true);
+      }
+    }
   };
+
+  const handleOTPVerify = async (otp: string): Promise<boolean> => {
+    const isValid = await verifyOTP(pendingMobile, otp);
+    
+    if (isValid) {
+      if (pendingUserData) {
+        // Complete registration
+        const success = await register(pendingUserData);
+        if (success) {
+          setTimeout(() => onComplete(), 1500);
+          return true;
+        }
+      } else {
+        // Complete login
+        setTimeout(() => onComplete(), 1500);
+        return true;
+      }
+    }
+    
+    return false;
+  };
+
+  const handleOTPResend = async (): Promise<void> => {
+    const otpResponse = await sendOTP(pendingMobile);
+    if (otpResponse.success) {
+      setDemoOTP(otpResponse.otp || '');
+    }
+  };
+
+  const handleOTPBack = () => {
+    setShowOTP(false);
+    setPendingMobile('');
+    setPendingUserData(null);
+    setDemoOTP('');
+  };
+
+  if (showOTP) {
+    return (
+      <OTPVerification
+        mobile={pendingMobile}
+        onVerify={handleOTPVerify}
+        onResend={handleOTPResend}
+        onBack={handleOTPBack}
+        isLoading={isLoading}
+        demoOTP={demoOTP}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 flex items-center justify-center p-6">
@@ -92,6 +188,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
 
           {/* Form Content */}
           <div className="p-8">
+            {/* Error Display */}
+            {error && (
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-6 text-center">
+                <p className="text-red-700 font-semibold text-sm">{error}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Register Fields */}
               {!isLogin && (
@@ -170,7 +273,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                     placeholder="Confirm Password"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full pl-12 pr-12 py-3 border-2 border-slate-300 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors font-semibold"
+                    className={`w-full pl-12 pr-12 py-3 border-2 rounded-xl focus:outline-none transition-colors font-semibold ${
+                      formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword
+                        ? 'border-red-500 focus:border-red-500'
+                        : 'border-slate-300 focus:border-yellow-500'
+                    }`}
                     required={!isLogin}
                   />
                   <button
@@ -180,6 +287,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   >
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
+                </div>
+              )}
+
+              {/* Password Mismatch Warning */}
+              {!isLogin && formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                <div className="text-red-600 text-sm font-semibold">
+                  Passwords do not match
                 </div>
               )}
 
@@ -203,13 +317,24 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
               {/* Submit Button */}
               <button
                 type="submit"
+                disabled={isLoading || (!isLogin && formData.password !== formData.confirmPassword)}
                 className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl ${
                   isLogin
                     ? 'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white'
                     : 'bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white'
-                }`}
+                } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3`}
               >
-                {isLogin ? 'Login' : 'Register'}
+                {isLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    {isLogin ? 'Logging in...' : 'Registering...'}
+                  </>
+                ) : (
+                  <>
+                    {isLogin ? <LogIn size={20} /> : <UserPlus size={20} />}
+                    {isLogin ? 'Login with OTP' : 'Register with OTP'}
+                  </>
+                )}
               </button>
 
               {/* Forgot Password (Login only) */}
