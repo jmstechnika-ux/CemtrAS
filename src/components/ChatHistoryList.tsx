@@ -1,11 +1,4 @@
-import React from "react";
-
-interface ChatHistoryListProps {
-  chats: { id: string; title: string }[];
-  onSelectChat: (id: string) => void;
-}
-
-const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ chats, onSelectChat }) => {
+export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ chats, onSelectChat }) => {
   return (
     <div className="h-full overflow-y-auto p-2 border-r border-gray-200">
       <h2 className="text-lg font-semibold mb-3">Chat History</h2>
@@ -23,5 +16,3 @@ const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ chats, onSelectChat }
     </div>
   );
 };
-
-export default ChatHistoryList;
