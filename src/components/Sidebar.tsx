@@ -28,6 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isLoading
 }) => {
   const { user, isAuthenticated, logout } = useAuth();
+  const { histories } = useChatHistory();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const handleLogout = () => {
@@ -157,8 +158,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   Chat History
                 </h4>
                 <ChatHistoryList 
-                  onLoadChat={onLoadChat}
-                  onNewChat={onNewChat}
+                  history={histories}
+                  onSelect={onLoadChat}
                 />
               </div>
             )}
