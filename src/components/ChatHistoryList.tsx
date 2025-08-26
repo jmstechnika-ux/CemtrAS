@@ -93,26 +93,26 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
       {/* New Chat Button */}
       <button
         onClick={onNewChat}
-        className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-800
+        className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-800
                  text-white rounded-xl hover:from-blue-700 hover:to-blue-900 transition-all duration-300
                  shadow-lg hover:shadow-xl font-semibold"
       >
-        <Plus size={18} />
-        New Chat
+        <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
+        <span className="text-sm sm:text-base">New Chat</span>
       </button>
 
       {/* Chat History Header */}
-      <div className="flex items-center gap-2 px-2">
+      <div className="flex items-center gap-2 px-1 sm:px-2">
         <MessageSquare className="text-slate-400" size={16} />
-        <h4 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
+        <h4 className="text-slate-300 font-semibold text-xs sm:text-sm uppercase tracking-wide">
           Chat History ({histories.length}/10)
         </h4>
       </div>
 
       {/* Chat History List */}
-      <div className="space-y-2 max-h-96 overflow-y-auto">
+      <div className="space-y-2 max-h-64 sm:max-h-96 overflow-y-auto">
         {histories.length === 0 ? (
-          <div className="p-4 bg-slate-800/30 rounded-xl border border-slate-600 text-center">
+          <div className="p-3 sm:p-4 bg-slate-800/30 rounded-xl border border-slate-600 text-center">
             <p className="text-slate-400 text-sm">No chat history yet</p>
             <p className="text-slate-500 text-xs mt-1">Start a conversation to save it here</p>
           </div>
@@ -131,7 +131,7 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
               </div>
 
               {/* Chat Title */}
-              <h5 className="text-white font-semibold text-sm mb-1 pr-8 line-clamp-2">
+              <h5 className="text-white font-semibold text-sm mb-1 pr-8 line-clamp-2 break-words">
                 {history.title}
               </h5>
 
@@ -162,7 +162,7 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
       </div>
 
       {/* Storage Info */}
-      <div className="px-2 py-1">
+      <div className="px-1 sm:px-2 py-1">
         <div className="w-full bg-slate-700 rounded-full h-1">
           <div 
             className="bg-gradient-to-r from-blue-500 to-yellow-500 h-1 rounded-full transition-all duration-300"

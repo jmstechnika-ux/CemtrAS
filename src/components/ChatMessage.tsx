@@ -112,7 +112,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   };
   
   return (
-    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-8`}>
+    <div className={`flex gap-3 sm:gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-6 sm:mb-8`}>
       <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg ${
         isUser 
           ? 'bg-gradient-to-br from-blue-600 to-blue-800' 
@@ -121,15 +121,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         {isUser ? <User size={20} className="text-white" /> : <Bot size={20} className="text-white" />}
       </div>
       
-      <div className={`max-w-4xl ${isUser ? 'text-right' : 'text-left'}`}>
-        <div className={`inline-block px-6 py-4 shadow-lg ${
+      <div className={`flex-1 max-w-none sm:max-w-4xl ${isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`inline-block px-4 sm:px-6 py-3 sm:py-4 shadow-lg max-w-full ${
           isUser
-            ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-2xl rounded-br-md'
-            : 'bg-white text-slate-800 border-4 border-slate-200 rounded-2xl rounded-bl-md'
+            ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl sm:rounded-2xl rounded-br-md'
+            : 'bg-white text-slate-800 border-2 sm:border-4 border-slate-200 rounded-xl sm:rounded-2xl rounded-bl-md'
         }`}>
           <div className="text-sm leading-relaxed">
             {isUser ? (
-              <div className="font-semibold">{message.content}</div>
+              <div className="font-semibold break-words">{message.content}</div>
             ) : (
               <div className="space-y-2">
                 {renderStructuredContent(message.content)}

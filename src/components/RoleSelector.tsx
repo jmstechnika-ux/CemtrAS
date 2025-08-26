@@ -79,25 +79,25 @@ export const RoleSelector: React.FC<RoleSelectorProps> = ({ selectedRole, onRole
           <button
             key={role.value}
             onClick={() => onRoleChange(role.value)}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 border-2 ${
+            className={`w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-300 border-2 ${
               selectedRole === role.value
                 ? `${role.color} shadow-lg transform scale-105`
                 : 'border-slate-600 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:border-slate-500'
             }`}
           >
-            <div className={`p-2 rounded-lg ${selectedRole === role.value ? 'bg-white/20' : 'bg-slate-700'}`}>
+            <div className={`p-1 sm:p-2 rounded-lg ${selectedRole === role.value ? 'bg-white/20' : 'bg-slate-700'} flex-shrink-0`}>
               {role.icon}
             </div>
-            <div className="text-left flex-1">
-              <div className={`font-bold text-sm ${selectedRole === role.value ? '' : 'text-white'}`}>
+            <div className="text-left flex-1 min-w-0">
+              <div className={`font-bold text-xs sm:text-sm ${selectedRole === role.value ? '' : 'text-white'} truncate`}>
                 {role.label}
               </div>
-              <div className={`text-xs ${selectedRole === role.value ? 'opacity-80' : 'text-slate-400'}`}>
+              <div className={`text-xs ${selectedRole === role.value ? 'opacity-80' : 'text-slate-400'} truncate`}>
                 {role.description}
               </div>
             </div>
             {selectedRole === role.value && (
-              <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full shadow-lg flex-shrink-0"></div>
             )}
           </button>
         ))}
