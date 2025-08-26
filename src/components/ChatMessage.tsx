@@ -112,20 +112,20 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   };
   
   return (
-    <div className={`flex gap-3 sm:gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-6 sm:mb-8`}>
-      <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg ${
+    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-6`}>
+      <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-lg ${
         isUser 
           ? 'bg-gradient-to-br from-blue-600 to-blue-800' 
-          : 'bg-gradient-to-br from-slate-700 to-slate-900'
+          : 'bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800'
       }`}>
-        {isUser ? <User size={20} className="text-white" /> : <Bot size={20} className="text-white" />}
+        {isUser ? <User size={16} className="text-white" /> : <Bot size={16} className="text-white" />}
       </div>
       
-      <div className={`flex-1 max-w-none sm:max-w-4xl ${isUser ? 'text-right' : 'text-left'}`}>
-        <div className={`inline-block px-4 sm:px-6 py-3 sm:py-4 shadow-lg max-w-full ${
+      <div className={`flex-1 max-w-4xl ${isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`inline-block px-4 py-3 shadow-sm max-w-full ${
           isUser
             ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl sm:rounded-2xl rounded-br-md'
-            : 'bg-white text-slate-800 border-2 sm:border-4 border-slate-200 rounded-xl sm:rounded-2xl rounded-bl-md'
+            : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-xl rounded-bl-md'
         }`}>
           <div className="text-sm leading-relaxed">
             {isUser ? (
@@ -137,7 +137,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             )}
           </div>
         </div>
-        <div className={`text-xs text-slate-500 mt-2 font-semibold ${isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium ${isUser ? 'text-right' : 'text-left'}`}>
           {isUser ? 'YOU' : 'CemtrAS AI'} • {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
       </div>

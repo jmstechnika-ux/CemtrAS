@@ -89,54 +89,33 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
   };
 
   return (
-    <div className="space-y-4">
-      {/* New Chat Button */}
-      <button
-        onClick={onNewChat}
-        className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-800
-                 text-white rounded-xl hover:from-blue-700 hover:to-blue-900 transition-all duration-300
-                 shadow-lg hover:shadow-xl font-semibold"
-      >
-        <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
-        <span className="text-sm sm:text-base">New Chat</span>
-      </button>
-
-      {/* Chat History Header */}
-      <div className="flex items-center gap-2 px-1 sm:px-2">
-        <MessageSquare className="text-slate-400" size={16} />
-        <h4 className="text-slate-300 font-semibold text-xs sm:text-sm uppercase tracking-wide">
-          Chat History ({histories.length}/10)
-        </h4>
-      </div>
-
-      {/* Chat History List */}
-      <div className="space-y-2 max-h-64 sm:max-h-96 overflow-y-auto">
+    <div className="space-y-2 max-h-48 overflow-y-auto">
         {histories.length === 0 ? (
-          <div className="p-3 sm:p-4 bg-slate-800/30 rounded-xl border border-slate-600 text-center">
-            <p className="text-slate-400 text-sm">No chat history yet</p>
-            <p className="text-slate-500 text-xs mt-1">Start a conversation to save it here</p>
+          <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-xl text-center">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No chat history yet</p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">Start a conversation to save it here</p>
           </div>
         ) : (
           histories.map((history) => (
             <div
               key={history.id}
               onClick={() => onLoadChat(history)}
-              className="group relative bg-slate-800/50 hover:bg-slate-700/50 rounded-xl p-3 border border-slate-600
-                       hover:border-slate-500 transition-all duration-300 cursor-pointer"
+              className="group relative bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg p-3 border border-gray-200 dark:border-gray-700
+                       hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 cursor-pointer"
             >
               {/* Role Badge */}
               <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-semibold mb-2 border ${getRoleColor(history.role)}`}>
                 {getRoleEmoji(history.role)}
-                <span className="hidden sm:inline">{history.role}</span>
+                <span className="text-xs">{history.role}</span>
               </div>
 
               {/* Chat Title */}
-              <h5 className="text-white font-semibold text-sm mb-1 pr-8 line-clamp-2 break-words">
+              <h5 className="text-gray-900 dark:text-white font-semibold text-sm mb-1 pr-8 line-clamp-2 break-words">
                 {history.title}
               </h5>
 
               {/* Date and Message Count */}
-              <div className="flex items-center justify-between text-xs text-slate-400">
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <Calendar size={12} />
                   <span>{formatDate(history.createdAt)}</span>
@@ -150,7 +129,7 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
                 className={`absolute top-2 right-2 p-1 rounded-lg transition-all duration-300 ${
                   deleteConfirm === history.id
                     ? 'bg-red-600 text-white'
-                    : 'bg-slate-600 text-slate-300 hover:bg-red-600 hover:text-white opacity-0 group-hover:opacity-100'
+                    : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300 hover:bg-red-600 hover:text-white opacity-0 group-hover:opacity-100'
                 }`}
                 title={deleteConfirm === history.id ? 'Click again to confirm' : 'Delete chat'}
               >
@@ -159,20 +138,18 @@ export const ChatHistoryList: React.FC<ChatHistoryListProps> = ({ onLoadChat, on
             </div>
           ))
         )}
-      </div>
-
+      
       {/* Storage Info */}
-      <div className="px-1 sm:px-2 py-1">
-        <div className="w-full bg-slate-700 rounded-full h-1">
+      <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
           <div 
             className="bg-gradient-to-r from-blue-500 to-yellow-500 h-1 rounded-full transition-all duration-300"
             style={{ width: `${(histories.length / 10) * 100}%` }}
           ></div>
         </div>
-        <p className="text-slate-500 text-xs mt-1 text-center">
+        <p className="text-gray-500 dark:text-gray-400 text-xs mt-1 text-center">
           {10 - histories.length} slots remaining
         </p>
       </div>
-    </div>
   );
 };
