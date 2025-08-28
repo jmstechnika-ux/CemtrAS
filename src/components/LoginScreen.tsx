@@ -138,7 +138,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
         <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-gray-300">
           <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl mx-auto mb-6">
             <img
-              src="/untitled (10).jpeg"
+              src="/LOGO.png"
               alt="CemtrAS AI | AI-Driven Engineering for Cement Excellence by Vipul Sharma"
               className="w-full h-full object-cover"
             />
