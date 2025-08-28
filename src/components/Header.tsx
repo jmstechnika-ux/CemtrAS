@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
                 </span>
                 <div className="w-8 h-8 rounded-full overflow-hidden">
                   <img 
-                    src="/LOGO.png" 
+                    src="/untitled (10).jpeg" 
                     alt="Guest User"
                     className="w-full h-full object-cover"
                   />

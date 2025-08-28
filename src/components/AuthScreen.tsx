@@ -148,7 +148,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
             </div>
             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-500">
               <img 
-                src="/LOGO.png" 
+                src="/untitled (10).jpeg" 
                 alt="CemtrAS AI"
                 className="w-full h-full object-cover"
               />
