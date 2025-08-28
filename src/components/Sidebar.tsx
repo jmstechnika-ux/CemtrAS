@@ -109,7 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div className="w-10 h-10 rounded-full overflow-hidden">
                 <img 
-                  src="/untitled (10).jpeg" 
+                  src="/LOGO.png" 
                   alt="Guest User"
                   className="w-full h-full object-cover"
                 />
